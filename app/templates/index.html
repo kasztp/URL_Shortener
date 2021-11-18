@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+<body>
+    {% block content %}
+        <div class="card mx-auto bg-light" style="height: 50%;">
+            <h1 class="card-header text-center" style="margin: 30px; padding: 30px;">URL Shortener API - Endpoints</h1>
+
+            <div class="card mx-auto border-info" style="margin: 20px; padding: 20px;">
+                <h2 class="card-header border-info" style="padding: 20px;">/v1/url-management/shorten</h2>
+
+            <div>
+                <h3 style="padding: 20px;">Input example</h3>
+            </div>
+
+            <pre style="padding: 20px;"><code>
+            {
+                "payload": "https://github.com/topics/amiga?l=python&o=asc&s=updated"
+            }
+            </code></pre>
+
+            <div>
+                <h3 style="padding: 20px;">Output example</h3>
+            </div>
+
+            <pre style="padding: 20px;"><code>
+            {
+              "is_url": true,
+              "original": "https://github.com/topics/amiga?l=python&o=asc&s=updated",
+              "shortened": "tier.app/7"
+            }
+            </code></pre>
+            </div>
+
+            <div class="card mx-auto border-info" style="margin: 20px; padding: 20px;">
+                <h2 class="card-header border-info" style="padding: 20px;">/v1/url-management/route</h2>
+
+            <div>
+                <h3 style="padding: 20px;">Input example</h3>
+            </div>
+
+            <pre style="padding: 20px;"><code>
+            {
+                "payload": "thisisnotanurl"
+            }
+            </code></pre>
+
+            <div>
+                <h3 style="padding: 20px;">Output example</h3>
+            </div>
+            
+            <pre style="padding: 20px;"><code>
+            {
+              "error": "Invalid input - URL not in DB.",
+              "in_database": false,
+              "shortened": "thisisnotanurl"
+            }
+            </code></pre>
+            </div>
+        </div>
+    {% endblock %}
+</body>
