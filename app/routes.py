@@ -24,7 +24,7 @@ def logger(ip, url):
 def to_base_62(number):
     """Convert decimal integer to base 62 for further shortening"""
     b_62 = str()
-    digits = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
     while number != 0:
         number, i = divmod(number, len(digits))
         b_62 = digits[i] + b_62
