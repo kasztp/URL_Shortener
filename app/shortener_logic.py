@@ -3,6 +3,7 @@ from app.models import URLStore, Logs
 
 
 def shortened_validator(data):
+    """Check if shortened URL maps to a valid DB entry."""
     url_check = URLStore.query.filter_by(shortened=data).first()
     if url_check:
         print(f'URL Already in DB as: {url_check.shortened}')
@@ -19,7 +20,7 @@ def logger(ip, url):
     db.session.commit()
 
 
-def to_base_62(number):
+def to_base_62(number: int) -> str:
     """Convert decimal integer to base 62 for further shortening"""
     b_62 = str()
     digits = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -30,6 +31,7 @@ def to_base_62(number):
 
 
 def shortener(data):
+    """Generate shortened URL"""
     original_url = data["payload"]
     url_check = URLStore.query.filter_by(original_url=original_url).first()
     if url_check:

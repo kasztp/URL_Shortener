@@ -5,6 +5,7 @@ Base = declarative_base()
 
 
 class URLStore(db.Model):
+    """ORM for urls DB table."""
     __tablename__ = 'urls'
     id = db.Column(db.Integer, primary_key=True)
     original_url = db.Column(db.String(2048))
@@ -12,6 +13,7 @@ class URLStore(db.Model):
 
 
 class Logs(db.Model):
+    """ORM for logs DB table"""
     __tablename__ = 'logs'
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.TIMESTAMP(), default=db.func.current_timestamp())

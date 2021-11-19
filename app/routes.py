@@ -6,12 +6,14 @@ from app.shortener_logic import logger, shortener, shortened_validator
 
 @app.route('/')
 def root():
+    """Route for /"""
     logger(request.remote_addr, '/')
     return render_template('index.html', title='URL Shortener API - Quick Start')
 
 
 @app.route('/v1/url-management/shorten', methods=["POST"])
 def shorten():
+    """Endpoint for shortening the supplied URL."""
     data = request.get_json(silent=True)
     logger(request.remote_addr, '/v1/url-management/shorten')
     if not request.json or 'payload' not in request.json:
@@ -32,6 +34,7 @@ def shorten():
 
 @app.route('/v1/url-management/route', methods=["POST"])
 def route():
+    """Endpoint for basic routing based on the shortened value."""
     data = request.get_json(silent=True)
     logger(request.remote_addr, '/v1/url-management/route')
     if not request.json or 'payload' not in request.json:
