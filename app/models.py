@@ -8,8 +8,8 @@ class URLStore(db.Model):
     """ORM for urls DB table."""
     __tablename__ = 'urls'
     id = db.Column(db.Integer, primary_key=True)
-    original_url = db.Column(db.String(2048))
-    shortened = db.Column(db.String(16))
+    original_url = db.Column(db.String(2048), index=True)
+    shortened = db.Column(db.String(16), index=True)
 
 
 class Logs(db.Model):
