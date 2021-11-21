@@ -43,7 +43,9 @@ def shortener(original_url):
         db.session.add(db_entry)
         db.session.commit()
 
+        # INVESTIGATE: Why is the below line marginally faster if outside of the above db.session?
         url_temp = URLStore.query.filter_by(original_url=original_url).first()
+
         shortened = str(to_base_62(url_temp.id))
         url_temp.shortened = shortened
         db.session.commit()

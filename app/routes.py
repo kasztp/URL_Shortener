@@ -1,5 +1,5 @@
 from flask import abort, escape, redirect, render_template, request
-from validator_collection.checkers import is_url
+from validator_collection.checkers import is_domain, is_url
 from app import app
 from app.shortener_logic import logger, shortener, shortened_validator
 
@@ -18,18 +18,19 @@ def shorten():
     logger(request.remote_addr, '/v1/url-management/shorten')
     if not request.json or 'payload' not in request.json:
         abort(400)
-    original = is_url(data["payload"])
-
-    if not original:
-        response = {
-            "error": "Invalid input - Not valid URL.",
-            "original": escape(data["payload"]),
-            "is_url": False
-        }
-        return response, 400
     else:
-        response = shortener(data["payload"])
-        return response
+        original = is_url(data["payload"]) or is_domain(data["payload"], allow_ips=True)
+
+        if not original:
+            response = {
+                "error": "Invalid input - Not valid URL.",
+                "original": escape(data["payload"]),
+                "is_url": False
+            }
+            return response, 400
+        else:
+            response = shortener(data["payload"])
+            return response
 
 
 @app.route('/v1/url-management/route', methods=["POST"])
@@ -39,17 +40,17 @@ def route():
     logger(request.remote_addr, '/v1/url-management/route')
     if not request.json or 'payload' not in request.json:
         abort(400)
-
-    shortened = escape(data["payload"])
-    original = shortened_validator(data["payload"])
-
-    if not original:
-        response = {
-            "error": "Invalid input - URL not in DB.",
-            "in_database": False,
-            "shortened": shortened
-        }
-        return response, 400
     else:
-        response = redirect(original)
-        return response, 200
+        shortened = escape(data["payload"])
+        original = shortened_validator(data["payload"])
+
+        if not original:
+            response = {
+                "error": "Invalid input - URL not in DB.",
+                "in_database": False,
+                "shortened": shortened
+            }
+            return response, 400
+        else:
+            response = redirect(original)
+            return response, 200
