@@ -18,17 +18,17 @@ def shorten():
     logger(request.remote_addr, '/v1/url-management/shorten')
     if not request.json or 'payload' not in request.json:
         abort(400)
-    original = escape(is_url(data["payload"]))
-    print(original)
+    original = is_url(data["payload"])
+
     if not original:
         response = {
             "error": "Invalid input - Not valid URL.",
-            "original": data["payload"],
+            "original": escape(data["payload"]),
             "is_url": False
         }
         return response, 400
     else:
-        response = shortener(data)
+        response = shortener(data["payload"])
         return response
 
 
@@ -39,13 +39,15 @@ def route():
     logger(request.remote_addr, '/v1/url-management/route')
     if not request.json or 'payload' not in request.json:
         abort(400)
-    original = escape(shortened_validator(data["payload"]))
-    print(original)
+
+    shortened = escape(data["payload"])
+    original = shortened_validator(data["payload"])
+
     if not original:
         response = {
             "error": "Invalid input - URL not in DB.",
             "in_database": False,
-            "shortened": data["payload"]
+            "shortened": shortened
         }
         return response, 400
     else:

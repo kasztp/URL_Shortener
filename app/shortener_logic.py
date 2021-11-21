@@ -30,10 +30,10 @@ def to_base_62(number: int) -> str:
     return b_62
 
 
-def shortener(data):
+def shortener(original_url):
     """Generate shortened URL"""
-    original_url = data["payload"]
     url_check = URLStore.query.filter_by(original_url=original_url).first()
+
     if url_check:
         print(f'URL Already in DB as: {url_check.shortened}')
         shortened = 'tier.app/' + url_check.shortened
@@ -48,10 +48,10 @@ def shortener(data):
         url_temp.shortened = shortened
         db.session.commit()
 
-        print(f'{url_temp.id} -> {shortened}')
         shortened = 'tier.app/' + url_temp.shortened
+
     response = {
-        "original": data["payload"],
+        "original": original_url,
         "shortened": shortened,
         "is_url": True,
     }
