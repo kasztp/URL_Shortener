@@ -1,4 +1,4 @@
-from flask import abort, redirect, render_template, request
+from flask import abort, escape, redirect, render_template, request
 from validator_collection.checkers import is_url
 from app import app
 from app.shortener_logic import logger, shortener, shortened_validator
@@ -18,7 +18,7 @@ def shorten():
     logger(request.remote_addr, '/v1/url-management/shorten')
     if not request.json or 'payload' not in request.json:
         abort(400)
-    original = is_url(data["payload"])
+    original = escape(is_url(data["payload"]))
     print(original)
     if not original:
         response = {
@@ -39,7 +39,7 @@ def route():
     logger(request.remote_addr, '/v1/url-management/route')
     if not request.json or 'payload' not in request.json:
         abort(400)
-    original = shortened_validator(data["payload"])
+    original = escape(shortened_validator(data["payload"]))
     print(original)
     if not original:
         response = {
