@@ -34,7 +34,7 @@ def shorten(test_input):
 def test_multithreaded_wrapper():
     """Wrapper for running a large number of tests concurrently"""
     url_count = 512
-    max_threads = 32
+    max_threads = 16
 
     # Read test dataset
     test_data_df = pd.read_csv(basedir + '\\test_data\\urlset.csv')
@@ -44,7 +44,7 @@ def test_multithreaded_wrapper():
     with ThreadPoolExecutor(max_workers=max_threads) as executor:
         request_times = list(executor.map(shorten, test_urls))
 
-    assert sum(request_times) / url_count < 0.35
+    assert sum(request_times) / url_count < 0.25
 
 
 def test_db_cleanup():

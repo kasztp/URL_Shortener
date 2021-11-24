@@ -19,12 +19,13 @@ def shorten():
     if not request.json or 'payload' not in request.json:
         abort(400)
     else:
-        original = is_url(data["payload"]) or is_domain(data["payload"], allow_ips=True)
+        url = data["payload"].replace(' ', '%20')
+        original = is_url(url) or is_domain(url, allow_ips=True)
 
         if not original:
             response = {
                 "error": "Invalid input - Not valid URL.",
-                "original": escape(data["payload"]),
+                "original": escape(url),
                 "is_url": False
             }
             return response, 400
