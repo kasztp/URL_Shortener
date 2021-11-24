@@ -5,16 +5,16 @@ URL Shortener api experiment with Flask
 
 Endpoints:
 
-/ --> API imput/output examples.
+/ --> API input/output examples.
 
 /v1/url-management/shorten --> URL Shortener.
 
-/v1/url-management/route --> Basic routing (redirect) to stored URLs based on the shortened value.
+/v1/url-management/route/<SHORTENED> --> Basic routing (redirect) to stored URLs based on the shortened value.
 
 
 Initial setup:
 1. Set DEBUG = False in config.py.
-2. Set DB URI in config.py (or use sqlite as fellback)
+2. Set DB URI in config.py (or use sqlite as fallback option)
 3. Prepare DB with Flask migrate
 
 

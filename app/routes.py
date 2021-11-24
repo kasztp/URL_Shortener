@@ -34,24 +34,24 @@ def shorten():
             return response
 
 
-@app.route('/v1/url-management/route', methods=["POST"])
-def route():
+@app.route('/v1/url-management/route/<shortened>', methods=["GET"])
+def route(shortened):
     """Endpoint for basic routing based on the shortened value."""
-    data = request.get_json(silent=True)
     logger(request.remote_addr, '/v1/url-management/route')
-    if not request.json or 'payload' not in request.json:
-        abort(400)
-    else:
-        shortened = escape(data["payload"])
-        original = shortened_validator(data["payload"])
 
-        if not original:
-            response = {
-                "error": "Invalid input - URL not in DB.",
-                "in_database": False,
-                "shortened": shortened
-            }
-            return response, 400
-        else:
-            response = redirect(original)
-            return response, 200
+    if len(shortened) != 16:
+        abort(400)
+
+    shortened = escape(shortened)
+    original = shortened_validator(shortened)
+
+    if not original:
+        response = {
+            "error": "Invalid input - URL not in DB.",
+            "in_database": False,
+            "shortened": shortened
+        }
+        return response, 400
+
+    response = redirect(original)
+    return response, 200

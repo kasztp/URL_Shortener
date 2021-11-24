@@ -14,7 +14,7 @@
 
             <pre style="padding: 20px;"><code>
             {
-                "payload": "https://github.com/topics/amiga?l=python&o=asc&s=updated"
+                "payload": "https://github.com/topics/amiga"
             }
             </code></pre>
 
@@ -25,23 +25,21 @@
             <pre style="padding: 20px;"><code>
             {
               "is_url": true,
-              "original": "https://github.com/topics/amiga?l=python&o=asc&s=updated",
-              "shortened": "tier.app/7"
+              "original": "https://github.com/topics/amiga",
+              "shortened": "tier.app/94c4f2a08f4b371d"
             }
             </code></pre>
             </div>
 
             <div class="card mx-auto border-info" style="margin: 20px; padding: 20px;">
-                <h2 class="card-header border-info" style="padding: 20px;">/v1/url-management/route</h2>
+                <h2 class="card-header border-info" style="padding: 20px;">/v1/url-management/route/&ltSHORTENED&gt</h2>
 
             <div>
                 <h3 style="padding: 20px;">Input example</h3>
             </div>
 
             <pre style="padding: 20px;"><code>
-            {
-                "payload": "thisisnotanurl"
-            }
+            /v1/url-management/route/94c4f2a08f4b371d
             </code></pre>
 
             <div>
@@ -49,11 +47,7 @@
             </div>
             
             <pre style="padding: 20px;"><code>
-            {
-              "error": "Invalid input - URL not in DB.",
-              "in_database": false,
-              "shortened": "thisisnotanurl"
-            }
+            Redirect to: "https://github.com/topics/amiga"
             </code></pre>
             </div>
         </div>
