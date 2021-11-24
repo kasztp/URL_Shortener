@@ -3,11 +3,16 @@ from concurrent.futures import ThreadPoolExecutor
 from flask import json
 import pandas as pd
 from time import time
-from app import app
-
+from app import app, db
+from app.models import Logs, URLStore
 
 basedir = path.abspath(path.dirname(__file__))
 app.testing = True
+
+
+def get_url_count() -> int:
+    number_of_urls = db.session.query(URLStore).count()
+    return number_of_urls
 
 
 def shorten(test_input):
@@ -39,4 +44,12 @@ def test_multithreaded_wrapper():
     with ThreadPoolExecutor(max_workers=max_threads) as executor:
         request_times = list(executor.map(shorten, test_urls))
 
-    assert sum(request_times) / url_count < 0.5
+    assert sum(request_times) / url_count < 0.35
+
+
+def test_db_cleanup():
+    """Cleanup DB after test suite ends"""
+    db.session.query(URLStore).delete()
+    db.session.query(Logs).delete()
+    db.session.commit()
+    assert get_url_count() == 0

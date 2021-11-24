@@ -23,15 +23,14 @@ def test_shorten():
 
         # Test for valid payload
         test_input_valid_payload = {
-            'payload': 'https://github.com/topics/amiga?l=python&o=asc&s=updated'
+            'payload': 'https://github.com/topics/amiga'
         }
-        expected_output_valid_payload = {
-          "is_url": True,
-          "original": "https://github.com/topics/amiga?l=python&o=asc&s=updated",
-          "shortened": "tier.app/1"
-        }
+
         response = app.test_client().post('/v1/url-management/shorten',
                                           json=test_input_valid_payload)
 
         assert response.status_code == 200
-        assert dict(json.loads(response.get_data(as_text=True))) == expected_output_valid_payload
+        result = dict(json.loads(response.get_data(as_text=True)))
+        assert result['is_url'] == True
+        assert result['original'] == "https://github.com/topics/amiga"
+        assert len(result['shortened']) == len("tier.app/19e0a0eb03b63bd4")

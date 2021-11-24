@@ -1,5 +1,6 @@
 from flask import json
 from app import app
+from app.models import URLStore
 
 app.testing = True
 
@@ -26,8 +27,12 @@ def test_route():
         assert dict(json.loads(response.get_data(as_text=True))) == expected_output_not_in_db
 
         # Test for valid shortened URL
-        test_input_url_in_db = {'payload': '1'}
-        expected_output_url_in_db = 'https://github.com/topics/amiga?l=python&amp;o=asc&amp;s=updated'
+        expected_output_url_in_db = 'https://github.com/topics/amiga'
+
+        test_input_url_in_db = {
+            "payload": URLStore.query.filter_by(original_url=expected_output_url_in_db).first().shortened
+        }
+        print(test_input_url_in_db)
         response = app.test_client().post('/v1/url-management/route',
                                           json=test_input_url_in_db,
                                           follow_redirects=True)
