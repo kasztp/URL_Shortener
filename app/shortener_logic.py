@@ -9,9 +9,8 @@ def shortened_validator(data: str):
     if url_check:
         print(f'URL Already in DB as: {url_check.shortened}')
         return url_check.original_url
-    else:
-        print('URL Not yet in DB.')
-        return False
+    print('URL Not yet in DB.')
+    return False
 
 
 def logger(ip: str, url: str):

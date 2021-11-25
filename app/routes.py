@@ -18,24 +18,24 @@ def shorten():
     logger(request.remote_addr, '/v1/url-management/shorten')
     if not request.json or 'payload' not in request.json:
         abort(400)
-    else:
-        url = data["payload"].replace(' ', '%20')
-        original = is_url(url) or is_domain(url, allow_ips=True)
 
-        if not original:
-            response = {
-                "error": "Invalid input - Not valid URL.",
-                "original": escape(url),
-                "is_url": False
-            }
-            return response, 400
-        else:
-            response = shortener(data["payload"])
-            return response
+    url = data["payload"].replace(' ', '%20')
+    original = is_url(url) or is_domain(url, allow_ips=True)
+
+    if not original:
+        response = {
+            "error": "Invalid input - Not valid URL.",
+            "original": escape(url),
+            "is_url": False
+        }
+        return response, 400
+
+    response = shortener(data["payload"])
+    return response
 
 
 @app.route('/v1/url-management/route/<shortened>', methods=["GET"])
-def route(shortened):
+def route(shortened: str):
     """Endpoint for basic routing based on the shortened value."""
     logger(request.remote_addr, '/v1/url-management/route')
 
