@@ -37,7 +37,7 @@ def test_multithreaded_wrapper():
     max_threads = 16
 
     # Read test dataset
-    test_data_df = pd.read_csv(basedir + '\\test_data\\urlset.csv')
+    test_data_df = pd.read_csv(path.join(basedir, 'test_data/urlset.csv'))
     test_data_df['domain'] = 'https://' + test_data_df['domain'].astype(str)
     test_urls = test_data_df['domain'].head(url_count)
 
