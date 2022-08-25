@@ -1,4 +1,4 @@
-# URL Shortener API
+# URL Shortener API [![Pytest](https://github.com/kasztp/URL_Shortener/actions/workflows/pylint.yml/badge.svg)](https://github.com/kasztp/URL_Shortener/actions/workflows/pylint.yml) [![Pytest](https://github.com/kasztp/URL_Shortener/actions/workflows/pytest.yml/badge.svg)](https://github.com/kasztp/URL_Shortener/actions/workflows/pytest.yml)
 
 URL Shortener api experiment with Flask
 
