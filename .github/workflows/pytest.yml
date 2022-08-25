@@ -18,13 +18,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest
-<<<<<<< HEAD
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Setup test DB
       run: |
         flask db upgrade
-=======
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
->>>>>>> 1b8068c4f4bf1cabb6d2195b9a664e022dac69ed
     - name: Test with pytest
       run: |
         python -m pytest
